@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Site A</title>
+  <SCRIPT type="text/javascript" lang="javascript" src="https://cdns.au1.gigya.com/JS/gigya.js?apikey=4__lAlNbeIIWNaZWc7LuthEw">
+  </SCRIPT>
+  <script language="javascript">
+
+    // This is where we run the login for an existing user
+    function doLogin() {
+      gigya.accounts.showScreenSet(
+      {
+        screenSet:'Default-RegistrationLogin',
+        startScreen:'gigya-login-screen',
+        containerID: 'container1',
+        customLang: {wrong_password: "Your email or password is incorrect"}
+      });
+    }
+     
+    // This is where we run the registration process for a new user
+    function doRegister() {   
+      gigya.accounts.showScreenSet(
+      {
+        screenSet:'Default-RegistrationLogin',
+        startScreen:'gigya-register-screen',
+        containerID: 'container1',
+        customLang: {email_already_exists: "You're already registered for My Account"}
+      });
+     }
+  
+    function eventHandler(eventObj) {
+      if(eventObj.field=='email' && eventObj.isValid==false && eventObj.errMsg== '400003') {
+        alert("You're already registered for My Account")
+      }
+    }
+
+    gigya.socialize.addEventHandlers({
+      onLogin: function(response) {
+        alert('You are now logged in');
+        console.log('You are now logged in');
+        console.log(response);
+      }
+    });
+
+  </script>
+  </head>
+  <body>
+    <h2>Arden's Sample CDC - Parent Site - Update 3</h2>    
+    <div id="runningCodeExample" style="border: 1px solid skyblue; padding: 15px; width: 300px;">
+      <a href="#" onclick="doLogin()">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="#" onclick="doRegister()">Register</a>
+      </br></br></br>
+      <a href="#" onclick="gigya.accounts.logout({callback:onLogout});">Logout</a>
+    </div>
+    <div id="container1"></div>
+  </body>
+</html>
